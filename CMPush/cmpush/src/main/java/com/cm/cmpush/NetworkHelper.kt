@@ -5,7 +5,6 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.Reader
-import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -20,7 +19,7 @@ internal object NetworkHelper {
     ) {
         val url = URL(endpoint)
 
-        Log.d(CMPush.TAG, "Starting network request.. \n$endpoint \n$body")
+//        Log.d(CMPush.TAG, "Starting network request.. \n$endpoint \n$body")
 
         Thread {
             val urlConnection = url.openConnection() as HttpURLConnection

@@ -132,13 +132,8 @@ object CMPush {
 
         val body = constructInformationObject(context, pushToken)
 
-        Log.d(TAG, "Has Data Hash: ${sharedPreferenceUtils.hasDataHash()}")
-
         if (sharedPreferenceUtils.hasDataHash()) {
             // If previous data hash is same, don't send an update to the backend
-
-            Log.d(TAG, "Hashes: \nStored: ${sharedPreferenceUtils.getDataHash()} \nNew: ${body.hashCode()}")
-
             if (sharedPreferenceUtils.getDataHash() == body.hashCode()) {
                 callback.invoke(true, null)
                 return
