@@ -1,9 +1,11 @@
-
-
 # CMPush
 
 CMPush is a solution for customers that want to send push notifications to their apps by using phone numbers. 
 The CM platform will look up the corresponding push token for the telephone number and send a push message. When a push message can't be delivered for some reason, CM will send the message by SMS (or another channel , if configured)
+
+
+
+Please see [https://www.cm.com/app/docs/en/api/business-messaging-api/1.0/index#push](https://www.cm.com/app/docs/en/api/business-messaging-api/1.0/index#push) for details.
 
 ---
 
