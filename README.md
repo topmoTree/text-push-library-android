@@ -1,4 +1,4 @@
-![CM](./Images/logo.svg)
+
 
 # CMPush
 
@@ -26,7 +26,7 @@ The first step of enabling push notifications is adding Firebase Cloud Messaging
 
 Add the JitPack repository to your root `build.gradle`.
 
-```json
+```
 allprojects {
     repositories {
         google()
@@ -40,7 +40,7 @@ allprojects {
 
 Next, add the dependency to your app-level `build.gradle`.
 
-```json
+```
 dependencies {
     // CMPush Library
     implementation 'com.github.CMDotCom:text-push-library-android:1.0.0.0'
