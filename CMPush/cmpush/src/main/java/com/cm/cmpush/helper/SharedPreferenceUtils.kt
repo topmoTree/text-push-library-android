@@ -1,8 +1,12 @@
-package com.cm.cmpush
+package com.cm.cmpush.helper
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import com.cm.cmpush.helper.JSONHelper.tryStringToJSONArray
+import com.cm.cmpush.helper.JSONHelper.tryStringToJSONObject
+import com.cm.cmpush.objects.CMPollSettings
+import org.json.JSONArray
 
 private const val SHARED_PREFERENCES_NAME = "com.cm.cmpush"
 
@@ -47,7 +51,7 @@ internal class SharedPreferenceUtils(private val sharedPreferences: SharedPrefer
 
     fun storeInstallationId(installationId: String) = storeStringSynchronous(PreferenceKey.INSTALLATION_ID, installationId)
 
-    fun deleteInstallationId() = deleteString(PreferenceKey.INSTALLATION_ID)
+    fun deleteInstallationId() = delete(PreferenceKey.INSTALLATION_ID)
     // </editor-fold>
 
     // <editor-fold desc="Data Hash">
@@ -60,14 +64,14 @@ internal class SharedPreferenceUtils(private val sharedPreferences: SharedPrefer
 
     fun storeDataHash(dataHash: Int) = storeIntSynchronous(PreferenceKey.DATA_HASH, dataHash)
 
-    fun deleteDataHash() = deleteString(PreferenceKey.DATA_HASH)
+    fun deleteDataHash() = delete(PreferenceKey.DATA_HASH)
     // </editor-fold>
 
     // <editor-fold desc="Channel ID">
     fun hasChannelId() = contains(PreferenceKey.CHANNEL_ID)
 
     fun getChannelId(): String? {
-        return if (hasAccountId()) requireString(PreferenceKey.CHANNEL_ID)
+        return if (hasChannelId()) requireString(PreferenceKey.CHANNEL_ID)
         else null
     }
 
@@ -84,7 +88,76 @@ internal class SharedPreferenceUtils(private val sharedPreferences: SharedPrefer
 
     fun storeNotificationId(notificationId: Int) = storeIntSynchronous(PreferenceKey.NOTIFICATION_ID, notificationId)
 
-    fun deleteNotificationId() = deleteString(PreferenceKey.NOTIFICATION_ID)
+    fun deleteNotificationId() = delete(PreferenceKey.NOTIFICATION_ID)
+    // </editor-fold>
+
+    // <editor-fold desc="Suggestion ID">
+    fun hasSuggestionId() = contains(PreferenceKey.SUGGESTION_ID)
+
+    fun getSuggestionId(): Int? {
+        return if (hasSuggestionId()) requireInt(PreferenceKey.SUGGESTION_ID)
+        else null
+    }
+
+    fun storeSuggestionId(suggestionId: Int) = storeIntSynchronous(PreferenceKey.SUGGESTION_ID, suggestionId)
+
+    fun deleteSuggestionId() = delete(PreferenceKey.SUGGESTION_ID)
+    // </editor-fold>
+
+    // <editor-fold desc="Push Token">
+    fun hasPushToken() = contains(PreferenceKey.PUSH_TOKEN_ID)
+
+    fun getPushToken(): String? {
+        return if (hasPushToken()) requireString(PreferenceKey.PUSH_TOKEN_ID)
+        else null
+    }
+
+    fun requirePushToken(): String {
+        return requireString(PreferenceKey.PUSH_TOKEN_ID)
+    }
+
+    fun storePushToken(pushToken: String) = storeStringSynchronous(PreferenceKey.PUSH_TOKEN_ID, pushToken)
+
+    fun deletePushToken() = delete(PreferenceKey.PUSH_TOKEN_ID)
+    // </editor-fold>
+
+    // <editor-fold desc="MSISDN">
+    fun hasMSISDN() = contains(PreferenceKey.MSISDN_ID)
+
+    fun getMSISDN(): String? {
+        return if (hasMSISDN()) requireString(PreferenceKey.MSISDN_ID)
+        else null
+    }
+
+    fun storeMISDN(msisdn: String) = storeStringSynchronous(PreferenceKey.MSISDN_ID, msisdn)
+
+    fun deleteMSISDN() = delete(PreferenceKey.MSISDN_ID)
+    // </editor-fold>
+
+    // <editor-fold desc="Message History">
+    fun hasMessageHistory() = contains(PreferenceKey.MESSAGE_HISTORY_ID)
+
+    fun getMessageHistory(): JSONArray {
+        return if (hasMessageHistory()) tryStringToJSONArray(requireString(PreferenceKey.MESSAGE_HISTORY_ID)) ?: JSONArray()
+        else JSONArray()
+    }
+
+    fun storeMessageHistory(history: JSONArray) = storeStringSynchronous(PreferenceKey.MESSAGE_HISTORY_ID, history.toString())
+
+    fun deleteMessageHistory() = delete(PreferenceKey.MESSAGE_HISTORY_ID)
+    // </editor-fold>
+
+    // <editor-fold desc="Poll settings">
+    fun hasPollSettings() = contains(PreferenceKey.POLL_SETTINGS)
+
+    fun getPollSettings(): CMPollSettings? {
+        return if (hasPollSettings()) CMPollSettings.fromJSONObject(tryStringToJSONObject(requireString(PreferenceKey.POLL_SETTINGS)))
+        else null
+    }
+
+    fun storePollSettings(pollSettings: CMPollSettings) = storeStringSynchronous(PreferenceKey.POLL_SETTINGS, pollSettings.toJSONObject().toString())
+
+    fun deletePollSettings() = delete(PreferenceKey.POLL_SETTINGS)
     // </editor-fold>
 
     /**
@@ -153,7 +226,7 @@ internal class SharedPreferenceUtils(private val sharedPreferences: SharedPrefer
         return sharedPreferences.getInt(key.name, 0)
     }
 
-    private fun deleteString(key: PreferenceKey) {
+    private fun delete(key: PreferenceKey) {
         sharedPreferences.edit().remove(key.name).apply()
     }
 
@@ -172,6 +245,16 @@ internal class SharedPreferenceUtils(private val sharedPreferences: SharedPrefer
 
         CHANNEL_ID("channelId"),
 
-        NOTIFICATION_ID("notificationId")
+        NOTIFICATION_ID("notificationId"),
+
+        SUGGESTION_ID("suggestionId"),
+
+        MESSAGE_HISTORY_ID("messageHistoryId"),
+
+        PUSH_TOKEN_ID("pushToken"),
+
+        MSISDN_ID("msisdn"),
+
+        POLL_SETTINGS("pollSettings"),
     }
 }

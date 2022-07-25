@@ -2,8 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cm.cmpush">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+
     <application
         android:allowBackup="true"
-        android:supportsRtl="true" />
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".receiver.NotificationInteractionReceiver"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name=".receiver.NotificationDismissedReceiver"
+            android:exported="false"/>
+
+<!--For now disable the bootreceiver. If WorkManager has pending work, it will launch the process -->
+<!--        <receiver-->
+<!--            android:name=".receiver.DeviceBootReceiver"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
+    </application>
 
 </manifest>

@@ -23,7 +23,7 @@
 -keep public class com.cm.cmpush.CMPush {
     *;
 }
--keep public class com.cm.cmpush.CMPushError {
+-keep public class com.cm.cmpush.objects.CMPushError {
     *;
 }
 -keep class com.cm.cmpush.SharedPreferenceUtils {

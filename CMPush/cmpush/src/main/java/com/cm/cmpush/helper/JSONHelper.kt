@@ -1,4 +1,4 @@
-package com.cm.cmpush
+package com.cm.cmpush.helper
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -17,11 +17,16 @@ internal object JSONHelper {
         }
     }
 
-    fun tryStringToJSONObject(json: String): JSONObject? {
+    fun tryStringToJSONObject(json: String?): JSONObject? {
+        if (json == null) return null
         return try {
             JSONObject(json)
         } catch (e: JSONException) {
             null
         }
+    }
+
+    fun JSONObject.getStringOrNull(key: String): String? {
+        return if (has(key)) getString(key) else null
     }
 }
