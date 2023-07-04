@@ -57,6 +57,7 @@ internal object NotificationHelper {
             Intent(context, NotificationInteractionReceiver::class.java).apply {
                 putExtra(CMPush.KEY_NOTIFICATION_ID, notificationId)
                 putExtra(CMPush.KEY_MESSAGE_ID, cmData.messageId)
+                putExtra("test", "testValue")
                 //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
