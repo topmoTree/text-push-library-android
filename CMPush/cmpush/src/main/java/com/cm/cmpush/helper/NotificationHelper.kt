@@ -76,7 +76,7 @@ internal object NotificationHelper {
 
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(notificationIcon)
-            .setContentTitle("Hardcoded title for test")
+            .setContentTitle(cmData.title ?: CMPush.getApplicationName(context))
             .setContentText(cmData.body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(openIntent)

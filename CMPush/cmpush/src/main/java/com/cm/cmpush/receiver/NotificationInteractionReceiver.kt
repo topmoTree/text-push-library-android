@@ -46,11 +46,17 @@ class NotificationInteractionReceiver : Activity() {
 
         Log.d(CMPush.TAG, "Handling intent with notificationId: $notificationId")
 
+        //FIXME remove later
+        Log.d(CMPush.TAG, "Handling intent with notificationId: $notificationId")
+
         // Remove notification
         NotificationManagerCompat.from(context).cancel(notificationId)
 
         // Handle suggestion action
         intent.getStringExtra(CMPush.KEY_SUGGESTION)?.let { suggestionJSON ->
+
+            Log.d(CMPush.TAG, "intent.getStringExtra")
+
             val suggestion = CMData.Suggestion.fromJSONObject(JSONObject(suggestionJSON))
 
             var eventType : CMPushEventType? = null
@@ -89,6 +95,9 @@ class NotificationInteractionReceiver : Activity() {
             }
         } ?: run {
             //Just an Open intent
+
+            Log.d(CMPush.TAG, "Just an Open intent")
+
             context.startActivity(
                 CMPush.appIntent
             )
