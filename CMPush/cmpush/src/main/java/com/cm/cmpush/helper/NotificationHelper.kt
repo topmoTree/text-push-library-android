@@ -51,13 +51,18 @@ internal object NotificationHelper {
     ) {
         val notificationId = getNotificationId(context)
 
+        val openAppPageSuggestion = cmData.suggestions.firstOrNull{ it.action == CMData.Suggestion.Action.OpenAppPage }
+
         val openIntent = PendingIntent.getActivity(
             context,
             notificationId,
             Intent(context, NotificationInteractionReceiver::class.java).apply {
                 putExtra(CMPush.KEY_NOTIFICATION_ID, notificationId)
                 putExtra(CMPush.KEY_MESSAGE_ID, cmData.messageId)
-                putExtra("test", "testValue")
+                if (openAppPageSuggestion != null){
+                    putExtra(CMPush.OPEN_APP_PAGE, openAppPageSuggestion.page)
+                }
+
                 //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
